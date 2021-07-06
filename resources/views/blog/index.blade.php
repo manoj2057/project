@@ -3,7 +3,7 @@
     <div class="az-content az-content-dashboard">
         <div class="container">
             <div class="az-content-body">
-                <a href="/blog/create">Create Product</a>
+                <a href="/blog/create">Create Post</a>
                 <table width="900" align="center">
                     <tr>
                         <td>Id</td>
@@ -22,8 +22,8 @@
                             <td>{{ $post->place }}</td>
 
                             <td>
-                                <a href="#">Edit</a>
-                                <a href="#">Delete</a>
+                                <a href="/blog/edit/{{ $post->id }}">Edit</a>
+                                <a href="/blog/destroy/{{ $post->id }}">Delete</a>
 
 
                             </td>

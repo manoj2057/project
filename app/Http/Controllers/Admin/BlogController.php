@@ -49,10 +49,11 @@ class BlogController extends Controller
 
 
         if ($request->hasFile('img')) {
-            $name = $request->file('img')->store('images');
+            // uploading img to imgs folder
+            $name = $request->file('img')->getClientOriginalName();
+            $request->file('img')->storeAs('public/images', $name);
             $posts->img = $name;
         }
-
         if ($posts->save()) {
             return redirect()->route('post_list');
         } else {
@@ -79,9 +80,10 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $categories = category::all();
+        return view('blog.edit', compact('post', 'categories'));
     }
 
     /**
@@ -91,10 +93,29 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, POst $posts)
     {
-        //
+        $posts->title = $request->get('title');
+        $posts->desc = $request->get('desc');
+        $posts->author = $request->get('author');
+        $posts->place = $request->get('place');
+        $posts->category_id = $request->get('category_id');
+
+
+        if ($request->hasFile('img')) {
+            // uploading img to imgs folder
+            $name = $request->file('img')->getClientOriginalName();
+            $request->file('img')->storeAs('public/images', $name);
+            $posts->img = $name;
+        }
+        if ($posts->save()) {
+            return redirect()->route('post_list');
+        } else {
+            return redirect()->back();
+        }
     }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -102,8 +123,14 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(POst $post)
     {
-        //
+        $post->delete();
+
+        if ($post->delete()) {
+            return redirect()->route('product_list');
+        } else {
+            return redirect()->back();
+        }
     }
 }

@@ -1,6 +1,6 @@
 <!doctype html>
 
-<title>Laravel From Scratch Blog</title>
+<title>Our Blog page</title>
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -96,8 +96,8 @@
 
                 <div class="py-6 px-5 lg:flex">
                     <div class="flex-1 lg:mr-8">
-                        <img
-                            src="{{ $post->img == '' ? '/blog/images/illustration-1.png' : asset('storage/images/' . $post->img) }}">
+                        <img src="{{ $post->img == '' ? '/blog/images/illustration-1.png' : asset('storage/images/' . $post->img) }}"
+                            alt="Blog Post illustration" class="rounded-xl">
 
 
 

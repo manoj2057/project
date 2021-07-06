@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\BLOGController;
+use App\Models\Post;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,16 +19,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/readmore/{post}', function (post $post) {
+
+    return view('post', ['post' => $post]);
+});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
-Route::get('/readmore/{post}', function (post $post) {
-    //$product= product::find($id);
-    return view('post', ['post' => $post]);
-});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [App\Http\Controllers\BlogController::class, 'index']);
@@ -35,4 +39,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])
         ->name('dashboard');
+    Route::get('/blog/edit/{post}', [App\Http\Controllers\Admin\BlogController::class, 'edit']);
+    Route::get('/blog/destroy/{post}', [App\Http\Controllers\Admin\BlogController::class, 'destroy']);
+    Route::POST('/blog/update/{post}', [App\Http\Controllers\Admin\BlogController::class, 'update']);
 });
