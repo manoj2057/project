@@ -77,7 +77,7 @@
                         <a href="" class="nav-link with-sub"><i class="typcn typcn-document"></i> Products</a>
                         <nav class="az-menu-sub">
                             <a href="/blog/index" class="nav-link">post</a>
-                            <a href="/blog/index" class="nav-link">categories</a>
+                            <a href="/blog/categories/index" class="nav-link">categories</a>
                         </nav>
                     </li>
                     <li class="nav-item">

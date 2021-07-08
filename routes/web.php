@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BLOGController;
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Models\Post;
 use App\Models\Category;
 
@@ -42,4 +43,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/blog/edit/{post}', [App\Http\Controllers\Admin\BlogController::class, 'edit']);
     Route::get('/blog/destroy/{post}', [App\Http\Controllers\Admin\BlogController::class, 'destroy']);
     Route::POST('/blog/update/{post}', [App\Http\Controllers\Admin\BlogController::class, 'update']);
+    //Categorie route  
+
+    Route::get('/blog/categories/create', [App\Http\Controllers\Admin\CategoriesController::class, 'create'])->name('create_categoris');
+    Route::post('/blog/categories/store', [App\Http\Controllers\Admin\CategoriesController::class, 'store']);
+    Route::get('/blog/categories/index', [App\Http\Controllers\Admin\CategoriesController::class, 'index'])->name('categories_list');
+    Route::get('/blog/categories/edit/{category}', [App\Http\Controllers\Admin\CategoriesController::class, 'edit']);
+    Route::get('/blog/categories/destroy/{category}', [App\Http\Controllers\Admin\CategoriesController::class, 'destroy']);
+    Route::POST('/blog/categories/update/{category}', [App\Http\Controllers\Admin\CategoriesController::class, 'update']);
 });
