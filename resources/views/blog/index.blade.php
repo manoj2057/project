@@ -3,7 +3,9 @@
     <div class="az-content az-content-dashboard">
         <div class="container">
             <div class="az-content-body">
+                @role('admin')
                 <a href="/blog/create">Create Post</a>
+                @endrole
                 <table width="900" align="center">
                     <tr>
                         <td>Id</td>

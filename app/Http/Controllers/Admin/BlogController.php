@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\category;
+use App\Models\user;
 
 class BlogController extends Controller
 {

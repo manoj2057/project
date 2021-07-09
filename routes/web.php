@@ -5,6 +5,9 @@ use App\Http\Controllers\Admin\BLOGController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Models\Post;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Contracts\Permission;
+use Spatie\Permission\Traits\HasRoles;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +28,8 @@ Route::get('/readmore/{post}', function (post $post) {
     return view('post', ['post' => $post]);
 });
 
+Route::get('/home', [App\Http\Controllers\BlogController::class, 'index']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -33,7 +38,7 @@ Route::get('/dashboard', function () {
 require __DIR__ . '/auth.php';
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/home', [App\Http\Controllers\BlogController::class, 'index']);
+
     Route::get('/blog/create', [App\Http\Controllers\Admin\BlogController::class, 'create'])->name('create_post');
     Route::post('/blog/store', [App\Http\Controllers\Admin\BlogController::class, 'store']);
     Route::get('/blog/index', [App\Http\Controllers\Admin\BlogController::class, 'index'])->name('post_list');
@@ -51,4 +56,20 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/blog/categories/edit/{category}', [App\Http\Controllers\Admin\CategoriesController::class, 'edit']);
     Route::get('/blog/categories/destroy/{category}', [App\Http\Controllers\Admin\CategoriesController::class, 'destroy']);
     Route::POST('/blog/categories/update/{category}', [App\Http\Controllers\Admin\CategoriesController::class, 'update']);
+});
+Route::get('/create-role', function () {
+    $newPost = Permission::create(['name' => 'new post']);
+    $editpost = Permission::create(['name' => 'edit post']);
+    $category = Permission::create(['name' => 'category post']);
+    $role = Permission::create(['name' => 'role']);
+
+
+    $role = Permission::create(['name' => 'admin']);
+    $role->givePermission($category);
+    $role->givePermission($editpost);
+    $role->givePermission($newpost);
+
+    Auth::user()->givePermissionTo($newPost);
+    Auth::user()->givePermissionTo($editpost);
+    Auth::user()->givePermissionTo($role);
 });
